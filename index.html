@@ -3,1111 +3,803 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>济南天山实验学校二班 | 2026届毕业纪念册</title>
+<title>毕业纪念册</title>
 <style>
-/* 鸿蒙HarmonyOS Sans字体 */
-@font-face {
-  font-family: "HarmonyOS Sans";
-  src: local("HarmonyOS Sans SC"), local("HarmonyOS Sans");
-  font-weight: 400;
-  font-style: normal;
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f0f7ff;font-family:"HarmonyOS Sans",system-ui,-apple-system,sans-serif;opacity:0;transition:opacity 1s ease}
+body.show{opacity:1}
+body.lock{overflow:hidden !important;}
+
+/* 三级性能模式 - 全局毛玻璃 */
+body.raw-mode .backdrop-item,
+body.cwba-mode .backdrop-item{
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
 }
-@font-face {
-  font-family: "HarmonyOS Sans";
-  src: local("HarmonyOS Sans SC Bold"), local("HarmonyOS Sans Bold");
-  font-weight: 600;
-  font-style: normal;
+body.scad-mode .backdrop-item{
+  backdrop-filter:blur(4px) !important;
+  -webkit-backdrop-filter:blur(4px) !important;
+  background:rgba(255,255,255,0.45) !important;
 }
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "HarmonyOS Sans", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+body.scad-mode .swiper-wrap{transition-duration:0.3s}
+body.scad-mode .photo-card{transition-duration:0.2s}
+body.scad-mode .photo-card:hover{transform:translateY(-3px);box-shadow:0 4px 16px rgba(116,169,232,0.12)}
+
+/* 开屏加载 */
+.page-loader{
+  position:fixed;inset:0;background:#000;z-index:9999999;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  padding-bottom:120px;transition:opacity 0.6s ease;
 }
-:root {
-  --main-blue: #c6e0ff;
-  --deep-blue: #74a9e8;
-  --pink: #ffd6e0;
-  --glass-bg: rgba(255, 255, 255, 0.25);
-  --glass-blur: 12px;
-  --text-color: #1f2937;
-  --egg-base-bg: #e8f2ff;
-  --egg-blue-bg: #b8d4f5;
+.page-loader.hide{opacity:0;pointer-events:none}
+.load-bar{width:60vw;max-width:400px;height:4px;background:rgba(255,255,255,0.2);border-radius:99px;overflow:hidden}
+.load-bar div{height:100%;width:0;background:#fff;transition:width 0.2s linear}
+.load-text{color:#fff;margin-bottom:16px;font-size:15px}
+
+/* 设置按钮 */
+.setting-btn{
+  position:fixed;top:24px;right:24px;width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(10px);cursor:pointer;font-size:18px;
+  display:grid;place-items:center;z-index:999999;
 }
-body {
-  background-color: #f0f7ff;
-  color: var(--text-color);
-  overflow-x: hidden;
-  padding-bottom: 80px;
+
+/* 通用弹窗遮罩 */
+.mask{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:1000;display:none;align-items:center;justify-content:center}
+.mask.show{display:flex}
+.modal{width:82vw;max-width:420px;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);border-radius:16px;padding:28px 24px}
+.setting-item{width:100%;padding:14px 16px;border-radius:10px;background:rgba(230,240,255,0.5);margin-bottom:12px;cursor:pointer;transition:0.2s}
+.setting-item:active{transform:scale(0.98)}
+.divider{width:100%;height:1px;background:rgba(116,169,232,0.3);margin:18px 0}
+.layout-box{display:flex;gap:8px;justify-content:center;margin:16px 0}
+.layout-btn{border:1px solid #74a9e8;background:transparent;color:#0f3460;padding:6px 12px;border-radius:20px;cursor:pointer;transition:0.2s}
+.layout-btn.active{background:#74a9e8;color:#fff}
+
+/* 模式选择弹窗 */
+.cwlo-mask{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:10000000;display:none;align-items:center;justify-content:center;padding:20px}
+.cwlo-mask.show{display:flex}
+.cwlo-box{width:100%;max-width:680px;background:rgba(255,255,255,0.98);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:22px;padding:30px}
+.engine-title{text-align:center;font-size:22px;font-weight:600;color:#0f3460;margin-bottom:10px}
+.engine-features{text-align:center;font-size:14px;color:#476b9c;line-height:1.6;margin-bottom:20px}
+.select-tip{text-align:center;font-size:14px;color:#476b9c;margin-bottom:28px}
+.cwlo-card{border:1px solid #74a9e8;border-radius:16px;padding:22px;margin-bottom:24px;cursor:pointer;position:relative;transition:0.2s transform, 0.2s box-shadow}
+.cwlo-card:hover{box-shadow:0 4px 20px rgba(116,169,232,0.15)}
+.cwlo-card:active{transform:scale(0.98)}
+.cwlo-card.active::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:4px;background:#74a9e8;border-radius:0 0 16px 16px}
+.card-title{font-size:19px;font-weight:600;color:#0f3460;margin-bottom:6px}
+.card-tag{font-size:14px;color:#74a9e8;margin-bottom:10px}
+.card-desc{font-size:14px;color:#1f2937;line-height:1.6}
+.copyright{text-align:center;color:#476b9c;font-size:13px;margin-top:12px}
+
+/* 页面头部 */
+header{
+  width:94%;max-width:1300px;margin:40px auto;padding:50px 20px;border-radius:20px;
+  background:rgba(255,255,255,0.25);backdrop-filter:blur(12px);
+  text-align:center;border:1px solid rgba(255,255,255,0.4)
 }
-/* 全局悬浮设置按钮 */
-.setting-float-btn {
-  position: fixed;
-  top: 24px;
-  right: 24px;
-  z-index: 99999;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.2);
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(10px);
-  font-size: 18px;
-  cursor: pointer;
+header h1{font-size:2.6rem;letter-spacing:3px;color:#0f3460;margin-bottom:12px;cursor:pointer}
+
+/* 轮播 */
+.swiper-wrap{display:flex;height:100%;transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94)}
+.swiper-item{flex:0 0 100%;height:100%;position:relative}
+.swiper-item img{width:100%;height:100%;object-fit:cover;cursor:pointer}
+.swiper-box{
+  width:94%;max-width:1300px;height:62vh;margin:0 auto 60px;border-radius:20px;
+  background:rgba(255,255,255,0.25);backdrop-filter:blur(12px);
+  overflow:hidden;position:relative;border:1px solid rgba(255,255,255,0.4)
 }
-/* 设置弹窗遮罩层 */
-.setting-mask {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  z-index: 100000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
-.setting-mask.show {
-  display: flex;
-}
-/* 设置弹窗主体 */
-.setting-modal {
-  width: 82vw;
-  max-width: 420px;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(16px);
-  border-radius: 16px;
-  padding: 28px 24px;
-}
-.setting-modal-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  text-align: center;
-}
-.setting-item {
-  width: 100%;
-  padding: 14px 16px;
-  border-radius: 10px;
-  background: rgba(230,240,255,0.5);
-  margin-bottom: 12px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-.setting-item:active {
-  background: rgba(210,230,255,0.7);
-}
-/* 子弹窗：关于、更新日志弹窗 */
-.sub-modal-mask {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 100001;
-  display: none;
-  align-items: center;
-  padding: 20px;
-}
-.sub-modal-mask.show {
-  display: flex;
-}
-.sub-modal-box {
-  width: 100%;
-  max-width: 460px;
-  max-height: 70vh;
-  overflow-y: auto;
-  background: #fff;
-  border-radius: 14px;
-  padding: 24px;
-}
-.sub-modal-close {
-  margin-top: 16px;
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background: var(--deep-blue);
-  color: white;
-  cursor: pointer;
-}
-header {
-  width: 94%;
-  max-width: 1300px;
-  margin: 40px auto;
-  padding: 50px 20px;
-  border-radius: 20px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid rgba(255, 255, 0.4);
-  text-align: center;
-  box-shadow: 0 8px 32px rgba(116, 169, 232, 0.15);
-}
-header h1 {
-  font-size: 2.6rem;
-  letter-spacing: 3px;
-  color: #0f3460;
-  margin-bottom: 12px;
-  cursor: pointer;
-  user-select: none;
-  font-weight: 600;
-}
-header p {
-  font-size: 1.15rem;
-  color: #274b7a;
-  opacity: 0.85;
-}
-.swiper-container {
-  width: 94%;
-  max-width: 1300px;
-  height: 62vh;
-  margin: 0 auto 60px;
-  border-radius: 20px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid rgba(255, 255, 0.4);
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 8px 32px rgba(116, 169, 232, 0.12);
-}
-.swiper-wrap {
-  display: flex;
-  height: 100%;
-  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  will-change: transform;
-}
-.swiper-item {
-  flex: 0 0 100%;
-  height: 100%;
-  position: relative;
-}
-.swiper-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  cursor: pointer;
-}
-.download-swiper {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(116, 169, 232, 0.7);
-  backdrop-filter: blur(6px);
-  border: none;
-  color: #fff;
-  font-size: 18px;
-  cursor: pointer;
-}
-.switch-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,0.5);
-  background: rgba(255,255,0.3);
-  backdrop-filter: blur(6px);
-  font-size: 22px;
-  color: #0f3460;
-  cursor: pointer;
-  z-index: 5;
-  transition: 0.2s ease;
-}
-.switch-btn:hover {
-  background: rgba(255,255,0.55);
-}
-.prev { left: 20px; }
-.next { right: 20px; }
-.album-title {
-  text-align: center;
-  font-size: 2rem;
-  margin: 0 auto 40px;
-  color: #0f3460;
-  letter-spacing: 2px;
-  font-weight: 600;
-}
-.photo-gallery {
-  width: 94%;
-  max-width: 1400px;
-  margin: 0 auto;
+.arrow{position:absolute;top:50%;transform:translateY(-50%);width:50px;height:50px;border-radius:50%;border:1px solid rgba(255,255,255,0.5);background:rgba(255,255,255,0.3);cursor:pointer;font-size:22px;color:#0f3460;z-index:5}
+.arrow.left{left:20px}
+.arrow.right{right:20px}
+
+/* 相册 */
+.album-title{text-align:center;font-size:2rem;margin:0 auto 40px;color:#0f3460;letter-spacing:2px}
+.gallery{width:94%;max-width:1400px;margin:0 auto;}
+/* 标准：横向拉宽错落拼图 */
+.gallery.mode-normal{
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 220px;
+  grid-auto-flow: dense;
   gap: 26px;
 }
-.photo-card {
-  border-radius: 18px;
-  padding: 12px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid rgba(255, 255, 0.4);
-  box-shadow: 0 6px 24px rgba(116, 169, 232, 0.1);
-  transition: all 0.3s ease;
-  position: relative;
+.gallery.mode-normal .photo-card{
   overflow: hidden;
 }
-.photo-card:hover {
-  transform: translateY(-7px);
-  box-shadow: 0 12px 36px rgba(116, 169, 232, 0.18);
+/* 每4张的第1张横向跨2列拉宽 */
+.gallery.mode-normal .photo-card:nth-child(4n+1){
+  grid-column: span 2;
 }
-.photo-card img {
+.gallery.mode-normal .photo-card img{
+  height: 100%;
   width: 100%;
-  height: 235px;
-  object-fit: cover;
-  border-radius: 12px;
-  display: block;
-  cursor: pointer;
-}
-.download-btn {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(116, 169, 232, 0.75);
-  border: none;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  backdrop-filter: blur(4px);
-  z-index:2;
-}
-.drawer-toggle {
-  position: fixed;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  width: 42px;
-  height: 90px;
-  background: #74a9e8;
-  color: #fff;
-  border: none;
-  border-radius: 0 12px 12px 0;
-  cursor: pointer;
-  z-index: 999;
-  font-size: 14px;
-}
-.drawer-wrap {
-  position: fixed;
-  top: 0;
-  left: -360px;
-  width: 340px;
-  height: 100vh;
-  background: rgba(255,255,0.35);
-  backdrop-filter: blur(16px);
-  border-right: 1px solid rgba(255,255,0.5);
-  transition: left 0.4s ease;
-  z-index: 998;
-  padding: 30px 20px;
-  overflow-y: auto;
-}
-.drawer-wrap.open {
-  left: 0;
-}
-.drawer-title {
-  font-size: 18px;
-  color: #0f3460;
-  margin-bottom: 20px;
-  text-align: center;
-  font-weight: 600;
-}
-.drawer-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-.drawer-item {
-  border-radius: 8px;
-  overflow: hidden;
-  cursor: pointer;
-}
-.drawer-item img {
-  width: 100%;
-  height: 90px;
   object-fit: cover;
 }
-footer {
-  width: 100%;
-  text-align: center;
-  margin-top: 80px;
-  font-size: 0.95rem;
-  color: #476b9c;
-  padding:10px 0;
+
+.gallery.mode-compact{
+  display: grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:12px;
 }
-.footer-mail{
-  display:block;
-  margin-top:8px;
-  color:#74a9e8;
-  text-decoration:none;
+.gallery.mode-single{
+  display: grid;
+  grid-template-columns:1fr;
+  max-width:700px;
+  gap:26px;
 }
-/* 预览弹窗层级修复 */
-.img-preview {
-  position: fixed;
-  inset: 0;
-  z-index: 999999 !important;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
-  overflow: hidden;
-}
-.preview-blur-bg {
-  position: absolute;
-  inset: 0;
-  background-size: 100vw 100vh;
-  background-position: center;
-  background-repeat: no-repeat;
-  filter: blur(20px) brightness(0.7);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  z-index: 1;
-}
-.preview-blur-bg.show {
-  opacity: 1;
-}
-.img-preview.show {
-  display: flex;
-}
-.img-preview img {
-  max-width: 92vw;
-  max-height: 85vh;
-  object-fit: contain;
-  z-index: 2;
-}
-.preview-top-bar {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  display: flex;
-  gap: 12px;
-  z-index: 9999999 !important;
-  pointer-events: auto !important;
-}
-.preview-top-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: rgba(0,0,0,0.35);
-  border: 1px solid rgba(255,255,0.4);
-  color: #fff;
-  font-size: 20px;
+.photo-card{
+  border-radius:18px;padding:12px;background:rgba(255,255,255,0.25);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.4);position:relative;overflow:hidden;
+  transition:all 0.3s ease;
   cursor: pointer;
-  display: grid;
-  place-items: center;
-  z-index: 99999999 !important;
-  pointer-events: auto !important;
 }
-.preview-sentence {
-  margin-top: 24px;
-  color: #ffffff;
-  font-size: 1rem;
-  text-align: center;
-  max-width: 90%;
-  line-height: 1.6;
-  z-index: 3;
-}
-/* 彩蛋全套样式完整保留 */
-.super-egg-wrap {
-  position: fixed;
-  inset: 0;
-  background: var(--egg-base-bg);
-  z-index: 10000;
-  display: none;
-  overflow: hidden;
-  transition: background 0.5s ease;
-}
-.super-egg-wrap.open {
-  display: block;
-}
-.super-egg-wrap.blueMode {
-  background: var(--egg-blue-bg);
-}
-.super-egg-wrap.transparent-bg {
-  background: transparent !important;
-}
-.super-bg-container {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
-  padding: 10px;
-  transition: filter 0.8s ease, opacity 0.8s ease;
-  opacity: 0.35;
-  animation: containerFloat 18s ease-in-out infinite alternate;
-}
-@keyframes containerFloat {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(8px, 5px); }
-}
-.super-bg-container.hideGrid {
-  opacity: 0 !important;
-  pointer-events: none;
-}
-.super-bg-blur {
-  filter: blur(14px) brightness(0.45);
-}
-.bg-item {
-  width: 100%;
-  height: 16vh;
-  object-fit: cover;
-}
-.super-bg-container div:nth-child(10n+6),
-.super-bg-container div:nth-child(10n+7),
-.super-bg-container div:nth-child(10n+8),
-.super-bg-container div:nth-child(10n+9),
-.super-bg-container div:nth-child(10n+10) {
-  transform: translateX(60px);
-}
-.single-blur-bg {
-  position: absolute;
-  inset: 0;
-  background-size: 100vw 100vh;
-  background-position: center;
-  background-repeat: no-repeat;
-  filter: blur(22px) brightness(0.75);
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-.single-blur-bg.showBlur {
-  opacity: 1;
-}
-.super-main-words {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #0f3460;
-  font-size: 1.05rem;
-  line-height: 1.7;
-  text-align: center;
-  white-space: pre-line;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-  padding: 16px;
-  max-width: 72%;
-  z-index: 5;
-}
-.super-main-words.show {
-  opacity: 1;
-}
-.super-main-words.hidden {
-  opacity: 0 !important;
-  pointer-events: none;
-}
-.super-single-img-wrap {
-  position: absolute;
-  inset: 0;
+.photo-card:hover{transform:translateY(-7px);box-shadow:0 12px 36px rgba(116,169,232,0.18)}
+.photo-card img{width:100%;height:235px;object-fit:cover;border-radius:12px;display:block}
+
+/* 大图详情预览 */
+.img-preview{position:fixed;inset:0;z-index:99999;display:none;background:rgba(0,0,0,0.9)}
+.img-preview.show{display:block}
+.preview-img-wrap{
+  width:100%;
+  height: calc(100vh - 120px);
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  z-index: 6;
+  padding: 40px;
 }
-.super-single-img-wrap.active {
-  opacity: 1;
+.img-preview img{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+  border-radius:12px;
 }
-.super-single-img-wrap img {
-  max-width: 92vw;
-  max-height: 85vh;
-  object-fit: contain;
+.preview-bottom{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  padding: 24px 40px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
 }
-.btn-close-egg {
-  position: absolute;
-  top: 22px;
-  left: 22px;
-  padding: 9px 16px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,0.15);
-  background: rgba(255,255,0.08);
-  backdrop-filter: blur(8px);
-  color: #0f3460;
-  font-size: 15px;
-  cursor: pointer;
-  z-index: 10;
+.preview-sentence{
+  color:#fff;
+  font-size:16px;
+  line-height:1.6;
+  text-shadow:0 1px 3px rgba(0,0,0,0.5);
+  max-width: 70%;
 }
-.switch-group {
-  position: absolute;
-  right: 24px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  z-index: 10;
+.preview-download{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.2);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.3);
+  color:#fff;
+  font-size:20px;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
 }
-.btn-switch {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,0.25);
-  background: rgba(255,255,0.12);
-  backdrop-filter: blur(8px);
-  color: #0f3460;
-  font-size: 20px;
-  cursor: pointer;
+.preview-close{
+  position:fixed;
+  top:24px;
+  right:24px;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.2);
+  border:1px solid rgba(255,255,255,0.3);
+  color:#fff;
+  font-size:22px;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  z-index:10;
 }
-.left-bottom-tip {
-  position: absolute;
-  left: 24px;
-  bottom: 26px;
-  max-width: 340px;
-  padding: 14px 18px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,0.12);
-  background: rgba(255, 255, 0.06);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  color: #0f3460;
-  font-size: 0.88rem;
-  line-height: 1.65;
-  opacity: 0;
-  transition: opacity 0.7s ease;
-  z-index: 10;
+
+/* ========== 彩蛋完整样式 ========== */
+.egg-wrap{position:fixed;inset:0;background:#e8f2ff;z-index:10000;overflow:hidden;display:none}
+.egg-wrap.open{display:block}
+.exit-egg{position:absolute;top:22px;left:22px;padding:9px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);cursor:pointer;z-index:20}
+.egg-switch{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:#0f3460;font-size:20px;cursor:pointer;z-index:15}
+.egg-switch.prev{left:20px}
+.egg-switch.next{right:20px}
+
+/* 封面图片网格 */
+.egg-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:10px;opacity:1;transition:filter 1s ease, opacity 0.8s ease}
+.egg-grid.blur{filter:blur(12px) brightness(0.8)}
+body.scad-mode .egg-grid.blur{filter:blur(4px) brightness(0.85)}
+.egg-grid img{width:100%;height:16vh;object-fit:cover;border-radius:8px}
+.egg-grid.hide{opacity:0;pointer-events:none}
+
+/* 封面主文案 */
+.egg-main-text{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  color:#0f3460;font-size:24px;text-align:center;white-space:pre-line;line-height:1.8;
+  opacity:0;transition:opacity 0.8s ease;z-index:5;pointer-events:none;
 }
-.left-bottom-tip.show {
-  opacity: 1;
+.egg-main-text.show{opacity:1}
+
+/* 单图浏览页 */
+.egg-single{position:absolute;inset:0;opacity:0;transition:opacity 0.5s ease;pointer-events:none;z-index:6}
+.egg-single.active{opacity:1;pointer-events:auto}
+.egg-single-bg{position:absolute;inset:0;background-size:100vw 100vh;background-position:center;filter:blur(16px) brightness(0.75)}
+body.scad-mode .egg-single-bg{filter:blur(6px) brightness(0.8)}
+.egg-single-img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);max-width:90vw;max-height:75vh;object-fit:contain;border-radius:12px;z-index:2}
+.egg-sentence{
+  position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+  padding:14px 28px;border-radius:12px;
+  background:rgba(0,0,0,0.45);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  color:#fff;font-size:15px;text-align:center;max-width:80%;z-index:3;
+  text-shadow:0 1px 3px rgba(0,0,0,0.5);
 }
-.scroll-words-box {
-  position: absolute;
-  bottom: 90px;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  height: 42px;
-  display: none;
-  z-index: 9;
+body.scad-mode .egg-sentence{backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+
+/* 终页粒子+毕业快乐 */
+.egg-final{position:absolute;inset:0;opacity:0;transition:opacity 1s ease;pointer-events:none;z-index:10;background:#0f3460}
+.egg-final.show{opacity:1;pointer-events:auto}
+#eggCanvas{position:absolute;inset:0;width:100%;height:100%}
+.egg-final-text{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  color:#fff;font-size:4rem;font-weight:600;letter-spacing:8px;z-index:2;
+  text-shadow:0 0 30px rgba(255,255,255,0.3);
 }
-.scroll-words-box.run {
-  display: block;
+body.scad-mode .egg-final-text{font-size:3rem}
+
+/* 页脚 */
+footer{text-align:center;margin-top:80px;padding:10px 0;color:#476b9c}
+
+/* 通用刷新提示 */
+.refresh-tip-wrap{
+  position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999999;
+  display:none;flex-direction:column;align-items:center;justify-content:center;gap:30px;
 }
-.scroll-track {
-  display: flex;
-  gap: 80px;
-  white-space: nowrap;
-  animation: scrollLoop 28s linear infinite;
-}
-@keyframes scrollLoop {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.scroll-item {
-  color: #1f3044;
-  font-size: 0.92rem;
-  opacity: 0.82;
-}
+.refresh-tip-wrap.show{display:flex}
+.refresh-text{color:#fff;font-size:22px;text-align:center;line-height:1.8}
+.refresh-confirm{padding:12px 36px;border:none;border-radius:8px;background:#74a9e8;color:#fff;font-size:16px;cursor:pointer}
 </style>
 </head>
 <body>
-<button class="setting-float-btn" id="settingOpenBtn">⚙</button>
-<div class="setting-mask" id="settingMask">
-  <div class="setting-modal">
-    <div class="setting-modal-title">设置</div>
-    <div class="setting-item" id="aboutSiteBtn">关于此网站</div>
-    <div class="setting-item" id="updateLogBtn">更新日志</div>
+
+<!-- 开屏加载 -->
+<div class="page-loader" id="loader">
+  <div class="load-text" id="loadTxt">正在加载 0%</div>
+  <div class="load-bar"><div id="bar"></div></div>
+</div>
+
+<!-- 设置按钮 -->
+<button class="setting-btn" id="setBtn">⚙</button>
+
+<!-- 设置弹窗 -->
+<div class="mask" id="setMask">
+  <div class="modal">
+    <div style="text-align:center;margin-bottom:20px;font-size:18px;font-weight:600;color:#0f3460">设置</div>
+    <div style="text-align:center;font-size:15px;color:#476b9c;margin-bottom:8px">相册布局</div>
+    <div class="layout-box">
+      <button class="layout-btn" data-type="mode-normal">标准</button>
+      <button class="layout-btn" data-type="mode-compact">紧凑</button>
+      <button class="layout-btn" data-type="mode-single">单列</button>
+    </div>
+    <div class="divider"></div>
+    <div class="setting-item" id="openCWLO">清水3.0 CWLO加载引擎</div>
+    <div class="divider"></div>
+    <div class="setting-item" id="aboutBtn">关于此网站</div>
+    <div class="setting-item" id="logBtn">更新日志</div>
   </div>
 </div>
-<div class="sub-modal-mask" id="aboutMask">
-  <div class="sub-modal-box">
-    <h3>关于此网站</h3
-    <p style="margin:12px 0;line-height:1.6;">
-      济南天山实验学校二班毕业纪念册网页<br>
+
+<!-- 模式选择弹窗 -->
+<div class="cwlo-mask" id="cwloMask">
+  <div class="cwlo-box">
+    <div class="engine-title">清水3.0 CWLO加载引擎</div>
+    <div class="engine-features">
+      三级性能调度 · 原生图片懒加载 · 分级动效渲染<br>
+      全设备自适应流畅运行
+    </div>
+    <div class="select-tip">请选择运行模式，后续可在设置中修改</div>
+
+    <div class="cwlo-card" data-mode="raw-mode">
+      <div class="card-title">无优化模式</div>
+      <div class="card-desc">全开动画与毛玻璃特效，推荐高配设备使用</div>
+    </div>
+
+    <div class="cwlo-card" data-mode="cwba-mode">
+      <div class="card-title">清澜均衡 CWBA</div>
+      <div class="card-tag">推荐日常使用</div>
+      <div class="card-desc">保留全部视觉效果，平衡流畅度与电池续航</div>
+    </div>
+
+    <div class="cwlo-card" data-mode="scad-mode">
+      <div class="card-title">浅澈兼容 SCAD</div>
+      <div class="card-tag">老旧低配设备专用</div>
+      <div class="card-desc">精简特效强度，降低性能占用，低配机稳定运行</div>
+    </div>
+
+    <div class="copyright">©️2026 青灯鸭</div>
+  </div>
+</div>
+
+<!-- 模式切换提示 -->
+<div class="refresh-tip-wrap" id="modeRefreshTip">
+  <div class="refresh-text">
+    模式配置已保存<br>请刷新页面完成设置生效
+  </div>
+  <button class="refresh-confirm" id="modeTipConfirm">我已知晓</button>
+</div>
+
+<!-- 布局切换提示 -->
+<div class="refresh-tip-wrap" id="layoutRefreshTip">
+  <div class="refresh-text">
+    布局设置已保存<br>请点击重新加载按钮启动此设置
+  </div>
+  <button class="refresh-confirm" id="layoutTipConfirm">重新加载</button>
+</div>
+
+<!-- 关于弹窗 -->
+<div class="mask" id="aboutMask">
+  <div class="modal">
+    <h3 style="color:#0f3460;margin-bottom:12px">关于此网站</h3>
+    <p style="margin:12px 0;line-height:1.6;color:#1f2937">
+      济南天山实验学校二班毕业纪念册<br>
       项目制作：青灯鸭qdduck<br>
-      引擎：清水3.0自研前端引擎
+      引擎：清水3.0 CWLO加载引擎
     </p>
-    <button class="sub-modal-close" id="aboutCloseBtn">关闭</button>
+    <button id="closeAbout" style="width:100%;padding:10px;border:none;border-radius:8px;background:#74a9e8;color:#fff;cursor:pointer">关闭</button>
   </div>
 </div>
-<div class="sub-modal-mask" id="logMask">
-  <div class="sub-modal-box">
-    <h3>更新日志</h3
-    <div style="margin-top:12px;line-height:1.7;">
-      <strong>版本 1.0</strong>
-      <ol style="padding-left:20px;margin:8px 0;">
-        <li>搭载自研清水3.0引擎架构重构核心JS函数；</li>
-        <li>普通图片预览移除纯黑底色，使用当前图片毛玻璃铺满留白区域；</li>
-        <li>彩蛋单图浏览页彻底隐藏原始交错网格背景，全屏使用当前图片模糊填充背景；</li>
-        <li>全文文案统一适配济南天山实验学校二班班级信息；</li>
-        <li>新增点击防抖、重复点击锁，防止连击造成页面卡顿；</li>
-        <li>优化动画渲染逻辑，将多图片独立动画改为容器整体动画，降低GPU渲染负载；</li>
-        <li>页面开启硬件加速will-change，主线程与GPU分离渲染，对标常规网页流畅度；</li>
-        <li>弹窗、彩蛋退出时主动清空图片DOM资源，释放浏览器内存，避免长期使用内存堆积卡顿；</li>
-        <li>彩蛋网格DOM仅首次初始化创建，复用DOM节点，减少页面频繁重排重绘；</li>
-        <li>全页面层级优化，固定静态图层，缩减不必要样式嵌套与filter多层计算；</li>
-        <li>普通大图预览右上角新增关闭、下载双快捷按钮；</li>
-        <li>全局字体替换为华为原生HarmonyOS Sans鸿蒙系统字体；</li>
-        <li>修复预览页按钮层级被遮挡、点击无响应BUG；</li>
+
+<!-- 更新日志弹窗 -->
+<div class="mask" id="logMask">
+  <div class="modal">
+    <h3 style="color:#0f3460;margin-bottom:12px">更新日志</h3>
+    <div style="margin:12px 0;line-height:1.7;color:#1f2937">
+      <strong style="color:#0f3460">版本1.3</strong>
+      <ol style="padding-left:20px;margin:8px 0">
+        <li>标准布局改为横向错落拼图样式</li>
+        <li>大图详情页重做，底部寄语+右下角下载</li>
+        <li>移除主页所有下载按钮，界面更简洁</li>
       </ol>
     </div>
-    <button class="sub-modal-close" id="logCloseBtn">关闭</button>
+    <button id="closeLog" style="width:100%;padding:10px;border:none;border-radius:8px;background:#74a9e8;color:#fff;cursor:pointer">关闭</button>
   </div>
 </div>
-<!-- 彩蛋完整容器，一点没删 -->
-<div class="img-preview" id="previewWrap">
-  <div class="preview-blur-bg" id="previewBlurBg"></div>
-  <div class="preview-top-bar">
-    <button class="preview-top-btn" id="previewDownloadBtn">⬇</button>
-    <button class="preview-top-btn" id="closePreview">×</button>
+
+<!-- 大图详情预览 -->
+<div class="img-preview" id="previewBox">
+  <button class="preview-close" id="previewClose">×</button>
+  <div class="preview-img-wrap">
+    <img id="previewImg" alt="">
   </div>
-  <img id="previewImg" src="" alt="大图预览">
-  <div class="preview-sentence" id="previewText"></div>
-</div>
-<div class="super-egg-wrap" id="eggBox">
-  <button class="btn-close-egg" id="exitEgg">退出彩蛋</button>
-  <div class="super-bg-container" id="bgWrap"></div>
-  <div class="single-blur-bg" id="singleBlurBg"></div>
-  <div class="super-main-words" id="mainEggText"></div>
-  <div class="super-single-img-wrap" id="singleImgBox">
-    <img id="showImg">
-  </div>
-  <div class="switch-group">
-    <button class="btn-switch" id="prevBtn">↑</button>
-    <button class="btn-switch" id="nextBtn">↓</button>
-  </div>
-  <div class="left-bottom-tip" id="bottomTip"></div>
-  <div class="scroll-words-box" id="scrollWordBox">
-    <div class="scroll-track" id="scrollTrack"></div>
+  <div class="preview-bottom">
+    <div class="preview-sentence" id="previewTip"></div>
+    <button class="preview-download" id="previewDown">⬇</button>
   </div>
 </div>
-<button class="drawer-toggle" id="toggleDrawer">相册<br>列表</button>
-<div class="drawer-wrap" id="drawerPanel">
-  <div class="drawer-title">全部照片 · 快捷下载</div>
-  <div class="drawer-list" id="drawerList"></div>
-</div>
-<header>
-  <h1 id="pageTitle">济南天山实验学校二班</h1>
-  <p>2026届初中二班 · 以此定格整个青春盛夏</p>
-</header>
-<div class="swiper-container">
-  <div class="swiper-wrap" id="swiperWrap">
-    <div class="swiper-item">
-      <img loading="lazy" src="img/IMG_0052.JPG" alt="毕业合影" data-src="img/IMG_0052.JPG">
-      <button class="download-swiper" data-index="0">⬇</button>
-    </div>
-    <div class="swiper-item">
-      <img loading="lazy" src="img/IMG_0053.JPG" alt="班级大合照" data-src="img/IMG_0053.JPG">
-      <button class="download-swiper" data-index="1">⬇</button>
-    </div>
-    <div class="swiper-item">
-      <img loading="lazy" src="img/IMG_0054.JPG" alt="好友留念" data-src="img/IMG_0054.JPG">
-      <button class="download-swiper" data-index="2">⬇</button>
-    </div>
-  </div>
-  <button class="switch-btn prev" onclick="prevSlide()">&lsaquo;</button>
-  <button class="switch-btn next" onclick="nextSlide()">&rsaquo;</button>
-</div>
-<h2 class="album-title">二班同窗碎片 · 岁岁回忆</h2>
-<div class="photo-gallery" id="galleryBox"></div>
-<footer>
-  ©️2026 青灯鸭
-  <a class="footer-mail" href="mailto:qingdengduck@126.com">qingdengduck@126.com</a>
-</footer>
-<script>
-// 图片列表完全保留你原版
-const imgNameList = [
-  "IMG_0052.JPG",
-  "IMG_0053.JPG",
-  "IMG_0054.JPG",
-  "IMG_0055.JPG",
-  "IMG_0056.JPG",
-  "IMG_0057.JPG",
-  "IMG_0058.JPG",
-  "IMG_0059.JPG",
-  "IMG_0060.JPG",
-  "IMG_0061.JPG",
-  "IMG_0062.JPG",
-  "IMG_0063.JPG",
-  "IMG_0064.JPG",
-  "IMG_0065.JPG",
-  "IMG_0066.JPG",
-  "IMG_0067.JPG",
-  "IMG_0068.JPG",
-  "IMG_0069.JPG",
-  "IMG_0070.JPG",
-  "IMG_0071.JPG",
-  "IMG_0072.JPG",
-  "IMG_0073.JPG",
-  "IMG_0074.JPG",
-  "IMG_0075.JPG",
-  "IMG_0076.JPG",
-  "IMG_0077.JPG",
-  "IMG_0078.JPG",
-  "IMG_0079.JPG",
-  "IMG_0080.JPG",
-  "IMG_0081.JPG",
-  "IMG_0082.JPG",
-  "IMG_0083.JPG",
-  "IMG_0084.JPG",
-  "IMG_0085.JPG",
-  "IMG_0086.JPG",
-  "IMG_0087.JPG",
-  "IMG_0088.JPG",
-  "IMG_0089.JPG",
-  "IMG_0090.JPG",
-  "IMG_0091.JPG",
-  "IMG_0092.JPG",
-  "IMG_0093.JPG",
-  "IMG_0094.JPG",
-  "IMG_0095.JPG",
-  "IMG_0096.JPG",
-  "IMG_0097.JPG",
-  "IMG_0098.JPG",
-  "IMG_0099.JPG",
-  "IMG_0100.JPG",
-  "IMG_0101.JPG",
-  "IMG_0102.JPG",
-  "IMG_0103.JPG",
-  "IMG_0104.JPG"
-];
-const basePath = "img/";
-// 全部寄语完整保留，一条没删
-const sentenceList = [
-"此程盛夏落幕，我们奔赴各自山海",
-"三年朝夕相伴，愿往后岁岁平安",
-"照片定格瞬间，友谊永远不会过期",
-"少年不惧前路长，彼方尚有荣光在",
-"山水有来路，早晚复相逢",
-"以此页存档青春，敬滚烫的少年时代",
-"愿我们顶峰相见，万事顺遂无忧",
-"课堂与晚风，都是独属于我们的回忆",
-"挥手告别初中，开启下一段人生旅途",
-"风遇山止，船到岸停，我们前路光明",
-"年少并肩同行，日后各自璀璨",
-"合照封存盛夏，思念跨越四季",
-"愿你遍历山河，仍觉人间值得",
-"今朝暂且分别，他日必定重逢",
-"少年自有凌云志，不负韶华不负己",
-"把回忆藏进相片，把前路握在手心",
-"愿此后乘风破浪，万事皆得所愿",
-"同窗三载难忘，余生万事明朗",
-"前路漫漫亦灿灿，往事堪堪亦澜澜",
-"以青春之名，赴时代之约",
-"散落漫天星光，各自奔赴远方",
-"且将新火试新茶，诗酒趁年华",
-"离别不是终点，而是新的起点",
-"愿你前路坦荡，万事皆无阻碍",
-"昔日并肩逐梦，未来顶峰相会",
-"镜头锁住温柔岁月，时光留住少年模样",
-"愿所有奔赴，都能如愿以偿",
-"青春没有散场，我们只是换场相聚",
-"怀揣热爱出发，奔赴下一场山海",
-"愿往后日子清透，世事皆温柔",
-"三载同窗岁月，一生温暖记忆",
-"纵有万般不舍，仍要挥手向前",
-"心有繁花似锦，眼有星辰大海",
-"带着此间回忆，奔赴下一场风雨",
-"愿你前程似锦，未来一路繁花",
-"相逢于初秋，告别于盛夏",
-"少年永远热烈，理想永远鲜活",
-"定格一张相片，珍藏一段流年",
-"此去经年漫漫，祝你步步生花",
-"聚是一团星火，散是漫天银河",
-"不惧离别匆匆，只为来日相逢",
-"把遗憾留在过往，把希望带向远方",
-"愿你奔赴热爱，永远自在如风",
-"课桌承载时光，好友相伴过往",
-"前路风雨兼程，身后温暖常在",
-"少年踏风而去，满载星光而归",
-"珍藏此间欢喜，奔赴下一程四季",
-"愿你所得皆所期，所失亦无碍",
-"一别同窗数载，再遇皆是良人",
-"以梦为马前行，不负年少初心",
-"夏日蝉鸣落幕，少年奔赴远方",
-"相片留住此刻，思念跨越距离",
-"愿你万事顺意，岁岁常欢愉",
-"告别懵懂年少，奔赴崭新篇章",
-"同行一程足矣，余生各自安好",
-"心怀滚烫理想，奔赴人间四方",
-"往事存入相册，未来大胆闯荡",
-"愿前路无荆棘，抬头皆有光亮",
-"三年烟火日常，一生念念不忘",
-"风吹少年衣角，去往山海迢迢",
-"不必时时相见，但求岁岁惦念",
-"带着同窗暖意，闯荡世间风雨",
-"愿你光芒万丈，不必借光而行",
-"定格青春碎片，拼凑独家回忆",
-"此去山高路远，祝你一路平安",
-"青春未完待续，我们后会有期",
-"放下过往羁绊，向着星光出发",
-"愿生活常温暖，日子总闪光",
-"昔日嬉笑打闹，他日各自闪耀",
-"山水相隔万里，情谊不曾远离",
-"少年初心不改，前路繁花盛开",
-"一张照片定格，整个青春铭记",
-"愿你历经千帆，归来仍是少年",
-"告别教室朝夕，奔赴人生旷野",
-"同行走过春夏，分开奔赴秋冬",
-"心藏温柔与勇敢，去往更远人间",
-"离别只是暂停，相逢终会来临",
-"愿每一次努力，都有圆满回应",
-"收藏朝夕相伴，奔赴广阔天地",
-"少年奔赴山海，永远赤诚可爱",
-"往事随风存档，未来步步向阳",
-"愿你平安喜乐，万事顺心无忧",
-"相伴三载时光，铭记一生同窗",
-"踏过眼前别离，遇见更好自己",
-"相片封存盛夏，温暖往后余生",
-"前路浩浩荡荡，万事尽可期待",
-"怀揣年少热忱，奔赴漫长人生",
-"不必纠结过往，只管向阳生长",
-"愿你前路明亮，永远自在坦荡",
-"相聚匆匆一程，思念岁岁一生",
-"少年迎风起航，不惧前路茫茫",
-"把美好存进照片，把思念放在心上",
-"愿此生多喜乐，岁月少忧愁",
-"告别初中篇章，书写人生新章",
-"同行一路风雨，分开各自晴空",
-"心怀星辰与热爱，奔赴下一场人海",
-"岁月悄悄翻页，少年奔赴前路",
-"愿所有分别，都是更好的遇见",
-"定格此刻笑容，珍藏年少相逢",
-"祝我们顶峰相见，岁岁平安长久"
-];
-const superBigWords = `致2026届天山实验二班
+
+<!-- ========== 彩蛋完整DOM ========== -->
+<div class="egg-wrap" id="eggBox">
+  <button class="exit-egg" id="exitEgg">退出彩蛋</button>
+  <button class="egg-switch prev" id="eggPrev">‹</button>
+  <button class="egg-switch next" id="eggNext">›</button>
+
+  <!-- 封面网格 -->
+  <div class="egg-grid" id="eggGrid"></div>
+  <!-- 封面主文案 -->
+  <div class="egg-main-text" id="eggMainText">致2026届天山实验二班
 三载朝夕相伴，珍藏此间回忆
-愿此去步履不停，前程万里
-纪念册：青灯鸭 ©2026`;
-function getRandSentence(){
-  return sentenceList[Math.floor(Math.random()*sentenceList.length)];
+愿此去步履不停，前程万里</div>
+
+  <!-- 单图浏览页 -->
+  <div class="egg-single" id="eggSingle">
+    <div class="egg-single-bg" id="eggSingleBg"></div>
+    <img class="egg-single-img" id="eggSingleImg" alt="">
+    <div class="egg-sentence" id="eggSentence"></div>
+  </div>
+
+  <!-- 终页粒子 -->
+  <div class="egg-final" id="eggFinal">
+    <canvas id="eggCanvas"></canvas>
+    <div class="egg-final-text">毕业快乐</div>
+  </div>
+</div>
+
+<!-- 页面头部 -->
+<header>
+  <h1 id="title">济南天山实验学校二班</h1>
+  <p>2026届初中毕业纪念册 · 以此定格整个青春盛夏</p>
+</header>
+
+<!-- 轮播 -->
+<div class="swiper-box">
+  <div class="swiper-wrap" id="swiperMain">
+    <div class="swiper-item">
+      <img src="img/IMG_0052.JPG" data-src="img/IMG_0052.JPG" loading="lazy" alt="">
+    </div>
+    <div class="swiper-item">
+      <img src="img/IMG_0053.JPG" data-src="img/IMG_0053.JPG" loading="lazy" alt="">
+    </div>
+    <div class="swiper-item">
+      <img src="img/IMG_0054.JPG" data-src="img/IMG_0054.JPG" loading="lazy" alt="">
+    </div>
+  </div>
+  <button class="arrow left" onclick="prevSwiper()">‹</button>
+  <button class="arrow right" onclick="nextSwiper()">›</button>
+</div>
+
+<!-- 相册 -->
+<h2 class="album-title">二班同窗碎片 · 岁岁年年</h2>
+<div class="gallery" id="galleryWrap"></div>
+
+<!-- 页脚 -->
+<footer>©️2026 青灯鸭</footer>
+
+<script>
+// ========== 全局常量 ==========
+const imgList = [
+"IMG_0052.JPG","IMG_0053.JPG","IMG_0054.JPG","IMG_0055.JPG","IMG_0056.JPG",
+"IMG_0057.JPG","IMG_0058.JPG","IMG_0059.JPG","IMG_0060.JPG","IMG_0061.JPG",
+"IMG_0062.JPG","IMG_0063.JPG","IMG_0064.JPG","IMG_0065.JPG","IMG_0066.JPG",
+"IMG_0067.JPG","IMG_0068.JPG","IMG_0088.JPG","IMG_0089.JPG","IMG_0090.JPG",
+"IMG_0091.JPG","IMG_0092.JPG","IMG_0093.JPG","IMG_0094.JPG","IMG_0095.JPG",
+"IMG_0096.JPG","IMG_0097.JPG","IMG_0098.JPG","IMG_0099.JPG","IMG_0100.JPG",
+"IMG_0101.JPG","IMG_0102.JPG","IMG_0103.JPG","IMG_0104.JPG"
+];
+const base = "img/";
+const sentences = [
+  "此程盛夏落幕，我们奔赴各自山海",
+  "少年不惧前路长，彼方尚有荣光在",
+  "山水有来路，早晚复相逢",
+  "愿我们顶峰相见，万事顺遂无忧",
+  "青春没有散场，我们只是换场相聚",
+  "愿你遍历山河，仍觉人间值得",
+  "少年自有凌云志，不负韶华不负己",
+  "愿此后乘风破浪，万事皆得所愿",
+  "聚是一团星火，散是漫天银河",
+  "愿你前程似锦，未来一路繁花"
+];
+
+// ========== DOM元素获取 ==========
+const gallery = document.getElementById("galleryWrap");
+const bar = document.getElementById("bar");
+const loadTxt = document.getElementById("loadTxt");
+const loader = document.getElementById("loader");
+const body = document.body;
+const cwloMask = document.getElementById("cwloMask");
+const cwloCards = document.querySelectorAll(".cwlo-card");
+const setMask = document.getElementById("setMask");
+const modeRefreshTip = document.getElementById("modeRefreshTip");
+const layoutRefreshTip = document.getElementById("layoutRefreshTip");
+const aboutMask = document.getElementById("aboutMask");
+const logMask = document.getElementById("logMask");
+const swiper = document.getElementById("swiperMain");
+const previewBox = document.getElementById("previewBox");
+const previewImg = document.getElementById("previewImg");
+const previewTip = document.getElementById("previewTip");
+
+// ========== 模式初始化 + 启动弹窗 ==========
+let mode = localStorage.getItem("cwloMode");
+let sliderTimer = null;
+
+if(!mode){
+  mode = "cwba-mode";
+  cwloMask.classList.add("show");
 }
-const galleryBox = document.getElementById('galleryBox');
-const drawerList = document.getElementById('drawerList');
-// 生成相册缩略，原版逻辑不动
-imgNameList.forEach(name=>{
-  const src = basePath+name;
-  const card = document.createElement('div');
-  card.className = "photo-card";
-  card.innerHTML = `<img loading="lazy" src="${src}" data-src="${src}"><button class="download-btn" data-file="${name}">⬇</button>`;
-  galleryBox.appendChild(card);
-  const thumb = document.createElement('div');
-  thumb.className = "drawer-item";
-  thumb.innerHTML = `<img loading="lazy" src="${src}">`;
-  thumb.onclick = ()=>downloadFile(src,name);
-  drawerList.appendChild(thumb);
-});
-// 优化下载：全局复用a标签，不反复创建删除DOM，解决卡顿
-const downloadA = document.createElement('a');
-document.body.appendChild(downloadA);
-function downloadFile(url,filename){
-  downloadA.href = url;
-  downloadA.download = filename;
-  downloadA.click();
-}
-// 所有下载按钮逻辑保留
-document.querySelectorAll('.download-btn').forEach(btn=>{
-  btn.onclick = e=>{
-    e.stopPropagation();
-    downloadFile(basePath+btn.dataset.file,btn.dataset.file);
+body.className = mode;
+
+cwloCards.forEach(c=>{
+  if(c.dataset.mode === mode) c.classList.add("active");
+  c.onclick = ()=>{
+    const newMode = c.dataset.mode;
+    mode = newMode;
+    localStorage.setItem("cwloMode", mode);
+    
+    cwloCards.forEach(x=>x.classList.remove("active"));
+    c.classList.add("active");
+    cwloMask.classList.remove("show");
+    modeRefreshTip.classList.add("show");
   }
-});
-document.querySelectorAll('.download-swiper').forEach(b=>{
-  b.onclick = ()=>{
-    let idx = Number(b.dataset.index);
-    downloadFile(basePath+imgNameList[idx],imgNameList[idx]);
+})
+document.getElementById("modeTipConfirm").onclick = ()=>modeRefreshTip.classList.remove("show");
+
+// ========== 开屏加载 ==========
+let loadCnt = 0;
+const preloadImgs = ["IMG_0052.JPG","IMG_0053.JPG","IMG_0054.JPG"];
+function loadFinish(){
+  loadCnt++;
+  let per = Math.round((loadCnt / preloadImgs.length) * 100);
+  bar.style.width = per + "%";
+  loadTxt.innerText = "正在加载 " + per + "%";
+  if(loadCnt >= preloadImgs.length){
+    setTimeout(()=>{
+      loader.classList.add("hide");
+      setTimeout(()=>body.classList.add("show"), 300);
+    }, 200);
   }
-});
-// 侧边抽屉开关
-document.getElementById('toggleDrawer').onclick = ()=>{
-  document.getElementById('drawerPanel').classList.toggle('open');
-};
-// 轮播原版逻辑不变
-let curSlide = 0;
-const swiperWrap = document.getElementById('swiperWrap');
-const totalSlide = swiperWrap.querySelectorAll('.swiper-item').length;
-function updateSwiper(){
-  swiperWrap.style.transform = `translateX(${-curSlide*100}%)`;
 }
-function nextSlide(){
-  curSlide = (curSlide+1)%totalSlide;
-  updateSwiper();
+preloadImgs.forEach(name=>{
+  const im = new Image();
+  im.src = base + name;
+  im.onload = loadFinish;
+  im.onerror = loadFinish;
+})
+
+// ========== 相册渲染 + 懒加载 ==========
+imgList.forEach(name=>{
+  const src = base + name;
+  const div = document.createElement("div");
+  div.className = "photo-card backdrop-item";
+  div.innerHTML = `<img src="${src}" data-src="${src}" loading="lazy" alt="">`;
+  gallery.appendChild(div);
+})
+
+// ========== 布局切换 ==========
+let layoutType = localStorage.getItem("layout") || "mode-normal";
+gallery.className = "gallery " + layoutType;
+
+document.querySelectorAll(".layout-btn").forEach(btn=>{
+  if(btn.dataset.type === layoutType) btn.classList.add("active");
+  btn.onclick = ()=>{
+    document.querySelectorAll(".layout-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    layoutType = btn.dataset.type;
+    localStorage.setItem("layout", layoutType);
+    layoutRefreshTip.classList.add("show");
+  }
+})
+document.getElementById("layoutTipConfirm").onclick = ()=>location.reload();
+
+// ========== 弹窗交互 ==========
+document.getElementById("setBtn").onclick = ()=>setMask.classList.add("show");
+setMask.onclick = e=>{if(e.target === setMask) setMask.classList.remove("show")}
+
+document.getElementById("openCWLO").onclick = ()=>{
+  setMask.classList.remove("show");
+  cwloMask.classList.add("show");
 }
-function prevSlide(){
-  curSlide = (curSlide-1+totalSlide)%totalSlide;
+
+document.getElementById("aboutBtn").onclick = ()=>{
+  setMask.classList.remove("show");
+  aboutMask.classList.add("show");
 }
-setInterval(nextSlide,5000);
-// 大图预览全套逻辑完整保留
-const previewWrap = document.getElementById('previewWrap');
-const previewImg = document.getElementById('previewImg');
-const previewText = document.getElementById('previewText');
-const previewBlurBg = document.getElementById('previewBlurBg');
-const closePreview = document.getElementById('closePreview');
-const previewDownloadBtn = document.getElementById('previewDownloadBtn');
-let previewLock = false;
-let currentPreviewSrc = "";
+aboutMask.onclick = e=>{if(e.target === aboutMask) aboutMask.classList.remove("show")}
+document.getElementById("closeAbout").onclick = ()=>aboutMask.classList.remove("show");
+
+document.getElementById("logBtn").onclick = ()=>{
+  setMask.classList.remove("show");
+  logMask.classList.add("show");
+}
+logMask.onclick = e=>{if(e.target === logMask) logMask.classList.remove("show")}
+document.getElementById("closeLog").onclick = ()=>logMask.classList.remove("show");
+
+// ========== 轮播 ==========
+let cur = 0;
+const total = swiper.children.length;
+function refreshSwiper(){
+  swiper.style.transform = `translateX(${-cur*100}%)`;
+}
+window.nextSwiper = function(){
+  cur = (cur+1)%total;
+  refreshSwiper();
+}
+window.prevSwiper = function(){
+  cur = (cur-1+total)%total;
+  refreshSwiper();
+}
+if(mode !== "scad-mode") sliderTimer = setInterval(nextSwiper, 5000);
+
+// ========== 下载函数 ==========
+function download(url, name){
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+// ========== 大图详情预览 ==========
+const previewClose = document.getElementById("previewClose");
+const previewDown = document.getElementById("previewDown");
+
 function openPreview(src){
-  if(previewLock) return;
-  previewLock = true;
-  currentPreviewSrc = src;
   previewImg.src = src;
-  previewText.innerText = getRandSentence();
-  previewBlurBg.style.backgroundImage = `url(${src})`;
-  previewBlurBg.classList.add('show');
-  previewWrap.classList.add('show');
-  document.body.style.overflow = 'hidden';
+  previewTip.innerText = sentences[Math.floor(Math.random()*sentences.length)];
+  previewBox.classList.add("show");
+  body.classList.add("lock");
 }
-function closePreviewModal(){
-  previewWrap.classList.remove('show');
-  previewBlurBg.classList.remove('show');
-  previewBlurBg.style.backgroundImage = '';
-  previewImg.src = '';
-  currentPreviewSrc = "";
-  document.body.style.overflow = '';
-  previewLock = false;
+function closePreview(){
+  previewBox.classList.remove("show");
+  previewImg.src = "";
+  body.classList.remove("lock");
 }
-previewDownloadBtn.onclick = ()=>{
-  if(currentPreviewSrc) downloadFile(currentPreviewSrc,currentPreviewSrc.split('/').pop());
-}
-closePreview.onclick = closePreviewModal;
-previewWrap.onclick = e=>{
-  if(e.target === previewWrap || e.target === previewBlurBg){
-    closePreviewModal();
-  }
-};
-document.querySelectorAll('img[data-src]').forEach(img=>{
+previewClose.onclick = closePreview;
+previewBox.onclick = e=>{if(e.target === previewBox) closePreview()}
+previewDown.onclick = ()=>download(previewImg.src, previewImg.src.split("/").pop());
+
+// 所有图片点击打开预览
+document.querySelectorAll("img[data-src]").forEach(img=>{
   img.onclick = ()=>openPreview(img.dataset.src);
-});
-// 设置弹窗原版逻辑
-const settingMask = document.getElementById('settingMask');
-const aboutMask = document.getElementById('aboutMask');
-const logMask = document.getElementById('logMask');
-document.getElementById('settingOpenBtn').onclick = ()=>settingMask.classList.add('show');
-document.getElementById('aboutSiteBtn').onclick = ()=>{
-  settingMask.classList.remove('show');
-  aboutMask.classList.add('show');
+})
+
+// ========== 彩蛋完整逻辑 ==========
+const eggBox = document.getElementById("eggBox");
+const eggGrid = document.getElementById("eggGrid");
+const eggMainText = document.getElementById("eggMainText");
+const eggSingle = document.getElementById("eggSingle");
+const eggSingleBg = document.getElementById("eggSingleBg");
+const eggSingleImg = document.getElementById("eggSingleImg");
+const eggSentence = document.getElementById("eggSentence");
+const eggFinal = document.getElementById("eggFinal");
+const eggPrev = document.getElementById("eggPrev");
+const eggNext = document.getElementById("eggNext");
+const canvas = document.getElementById("eggCanvas");
+const ctx = canvas.getContext("2d");
+
+let eggInit = false;
+let eggIndex = -1;
+let eggParticleAnim = null;
+let particles = [];
+
+function initEggGrid(){
+  if(eggInit) return;
+  eggGrid.innerHTML = "";
+  imgList.forEach(name=>{
+    const img = document.createElement("img");
+    img.src = base + name;
+    eggGrid.appendChild(img);
+  })
+  eggInit = true;
 }
-document.getElementById('updateLogBtn').onclick = ()=>{
-  settingMask.classList.remove('show');
-  logMask.classList.add('show');
-}
-document.getElementById('aboutCloseBtn').onclick = ()=>aboutMask.classList.remove('show');
-document.getElementById('logCloseBtn').onclick = ()=>logMask.classList.remove('show');
-settingMask.onclick = e=>{if(e.target === settingMask) settingMask.classList.remove('show')};
-// 标题5次点击彩蛋【完整保留，一点没删】
-let titleClickNum = 0;
-let titleTimer;
-const pageTitle = document.getElementById('pageTitle');
-pageTitle.addEventListener('touchend',()=>{
-  clearTimeout(titleTimer);
-  titleClickNum++;
-  titleTimer = setTimeout(()=>{
-    if(titleClickNum >=5) launchSuperEgg();
-    titleClickNum = 0;
-  },600);
-});
-// 彩蛋全套JS逻辑完整保留
-const eggBox = document.getElementById('eggBox');
-const bgWrap = document.getElementById('bgWrap');
-const mainEggText = document.getElementById('mainEggText');
-const singleImgBox = document.getElementById('singleImgBox');
-const showImg = document.getElementById('showImg');
-const bottomTip = document.getElementById('bottomTip');
-const scrollWordBox = document.getElementById('scrollWordBox');
-const scrollTrack = document.getElementById('scrollTrack');
-const singleBlurBg = document.getElementById('singleBlurBg');
-let nowIndex = -1;
-const totalImg = imgNameList.length;
-let eggInitDone = false;
-function initBgLayout(){
-  if(eggInitDone) return;
-  bgWrap.innerHTML = '';
-  imgNameList.forEach(name=>{
-    const img = document.createElement('img');
-    img.className = 'bg-item';
-    img.src = basePath+name;
-    bgWrap.appendChild(img);
-  });
-  eggInitDone = true;
-}
-function initScrollWords(){
-  scrollTrack.innerHTML = '';
-  const doubleList = [...sentenceList,...sentenceList];
-  doubleList.forEach(txt=>{
-    const span = document.createElement('span');
-    span.className = 'scroll-item';
-    span.innerText = txt;
-    scrollTrack.appendChild(span);
-  });
-}
-function launchSuperEgg(){
-  initBgLayout();
-  initScrollWords();
-  eggBox.classList.add('open');
-  eggBox.classList.remove('blueMode','transparent-bg');
-  document.body.style.overflow = 'hidden';
-  mainEggText.innerText = superBigWords;
-  bgWrap.classList.remove('super-bg-blur');
-  singleBlurBg.classList.remove('showBlur');
-  mainEggText.classList.remove('show','hidden');
-  singleImgBox.classList.remove('active');
-  nowIndex = -1;
+
+function launchEgg(){
+  initEggGrid();
+  eggBox.classList.add("open");
+  body.classList.add("lock");
+  eggIndex = -1;
+  
+  eggGrid.classList.remove("blur","hide");
+  eggMainText.classList.remove("show");
+  eggSingle.classList.remove("active");
+  eggFinal.classList.remove("show");
+  stopParticle();
+
   setTimeout(()=>{
-    bgWrap.classList.add('super-bg-blur');
-    mainEggText.classList.add('show');
-    bottomTip.innerText = getRandSentence();
-    bottomTip.classList.add('show');
-  },3000);
+    eggGrid.classList.add("blur");
+    setTimeout(()=>eggMainText.classList.add("show"), 600);
+  }, 1000);
 }
-document.getElementById('exitEgg').onclick = ()=>{
-  eggBox.classList.remove('open');
-  eggBox.classList.remove('transparent-bg');
-  showImg.src = '';
-  singleBlurBg.style.backgroundImage = '';
-  singleBlurBg.classList.remove('showBlur');
-  document.body.style.overflow = '';
-};
-let switchLock = false;
-document.getElementById('prevBtn').onclick = ()=>{
-  if(switchLock) return;
-  switchLock = true;
-  eggBox.classList.add('blueMode','transparent-bg');
-  mainEggText.classList.add('hidden');
-  bgWrap.classList.add('hideGrid');
-  if(nowIndex === -1){
-    nowIndex = totalImg - 1;
-  }else{
-    nowIndex = (nowIndex - 1 + totalImg) % totalImg;
+
+function showSingleImg(index){
+  const src = base + imgList[index];
+  eggSingleBg.style.backgroundImage = `url(${src})`;
+  eggSingleImg.src = src;
+  eggSentence.innerText = sentences[Math.floor(Math.random()*sentences.length)];
+  
+  eggGrid.classList.add("hide");
+  eggMainText.classList.remove("show");
+  eggSingle.classList.add("active");
+  eggFinal.classList.remove("show");
+}
+
+function showFinal(){
+  eggSingle.classList.remove("active");
+  eggFinal.classList.add("show");
+  initParticle();
+}
+
+function eggPrevPage(){
+  if(eggIndex === -1) return;
+  if(eggIndex >= imgList.length){
+    eggIndex = imgList.length - 1;
+    stopParticle();
+    showSingleImg(eggIndex);
+    return;
   }
-  renderSinglePic();
-  setTimeout(()=>switchLock=false,300);
-};
-document.getElementById('nextBtn').onclick = ()=>{
-  if(switchLock) return;
-  switchLock = true;
-  eggBox.classList.add('blueMode','transparent-bg');
-  mainEggText.classList.add('hidden');
-  bgWrap.classList.add('hideGrid');
-  if(nowIndex === -1){
-    nowIndex = 0;
+  eggIndex--;
+  if(eggIndex === -1){
+    eggSingle.classList.remove("active");
+    eggGrid.classList.remove("hide");
+    eggMainText.classList.add("show");
   }else{
-    nowIndex++;
-    if(nowIndex >= totalImg){
-      nowIndex = -1;
-      singleImgBox.classList.remove('active');
-      singleBlurBg.classList.remove('showBlur');
-      bgWrap.classList.remove('hideGrid');
-      eggBox.classList.remove('transparent-bg');
-      scrollWordBox.classList.add('run');
-      showImg.src = '';
-      singleBlurBg.style.backgroundImage = '';
-      switchLock = false;
-      return;
-    }
+    showSingleImg(eggIndex);
   }
-  renderSinglePic();
-  setTimeout(()=>switchLock=false,300);
-};
-function renderSinglePic(){
-  const imgSrc = basePath + imgNameList[nowIndex];
-  showImg.src = imgSrc;
-  singleImgBox.classList.add('active');
-  singleBlurBg.style.backgroundImage = `url(${imgSrc})`;
-  singleBlurBg.classList.add('showBlur');
-  bottomTip.innerText = getRandSentence();
+}
+
+function eggNextPage(){
+  if(eggIndex >= imgList.length) return;
+  eggIndex++;
+  if(eggIndex >= imgList.length){
+    showFinal();
+  }else{
+    showSingleImg(eggIndex);
+  }
+}
+
+// 粒子效果
+function initParticle(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  particles = [];
+  
+  const count = mode === "scad-mode" ? 35 : 100;
+  for(let i=0;i<count;i++){
+    particles.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height,
+      r: Math.random()*3+1,
+      vx: (Math.random()-0.5)*0.8,
+      vy: (Math.random()-0.5)*0.8,
+      alpha: Math.random()*0.5+0.3
+    })
+  }
+  renderParticle();
+}
+
+function renderParticle(){
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p=>{
+    p.x += p.vx;
+    p.y += p.vy;
+    if(p.x < 0) p.x = canvas.width;
+    if(p.x > canvas.width) p.x = 0;
+    if(p.y < 0) p.y = canvas.height;
+    if(p.y > canvas.height) p.y = 0;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(255,255,255,${p.alpha})`;
+    ctx.fill();
+  })
+  eggParticleAnim = requestAnimationFrame(renderParticle);
+}
+
+function stopParticle(){
+  if(eggParticleAnim){
+    cancelAnimationFrame(eggParticleAnim);
+    eggParticleAnim = null;
+  }
+}
+
+// 触屏滑动支持
+let touchStartX = 0;
+eggBox.addEventListener("touchstart", e=>{
+  touchStartX = e.touches[0].clientX;
+})
+eggBox.addEventListener("touchend", e=>{
+  const diff = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(diff) < 50) return;
+  if(diff > 0) eggPrevPage();
+  else eggNextPage();
+})
+
+// 按钮切换
+eggPrev.onclick = eggPrevPage;
+eggNext.onclick = eggNextPage;
+
+// 退出彩蛋
+document.getElementById("exitEgg").onclick = ()=>{
+  eggBox.classList.remove("open");
+  body.classList.remove("lock");
+  stopParticle();
+  eggIndex = -1;
+}
+
+// 标题连击5次触发彩蛋
+let clickNum = 0;
+let clickTimer;
+document.getElementById("title").onclick = function(){
+  clearTimeout(clickTimer);
+  clickNum++;
+  if(clickNum >= 5){
+    launchEgg();
+    clickNum = 0;
+  }
+  clickTimer = setTimeout(()=>clickNum=0, 800);
 }
 </script>
 </body>
